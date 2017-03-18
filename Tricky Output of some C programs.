@@ -1,0 +1,127 @@
+//Question 1
+
+#include<stdio.h>
+int main()
+{
+    int i;
+    for (i = 0; i<5; i++)
+    {
+        int i;
+        i = 10;
+        printf("%d ", i) ;
+    }
+    return 0;
+}
+
+/*
+Here, it would seem that, as ‘i’ got assigned a value 10, so the loop will run only one time because the loop condition will fail as ‘i’ becomes 11 the next time it enters the loop. But the output is quite different than what we expected. The reason behind this is the scope of variable is within the method. As soon as the loop exits , i is counted according to i of for loop which makes the condition true upto 5 times (0-4). See scope rules for more details.
+Here, the loop runs according to the ‘i’ declared outside the loop, and hence it will run five times and the ‘i’ inside the loop will be printed five times.
+Output:
+
+10 10 10 10 10
+
+/*
+
+//Question 2
+
+#include<stdio.h>
+int main()
+{
+    int i = 10;
+ 
+    static int x = i;
+ 
+    if (x==i)
+        printf("x and i are Equal\n");
+ 
+    return 0;
+}
+
+/*
+Here, it would seem that, as ‘x’ and ‘i’ are equal, so the output will be “x and i are Equal”. But the output is quite unexpected.
+As, static variables are load time entity while auto variables are run time entity an We can not initialize any load time variable by the run time variable. So,the output the c code above will show “Compile error”.
+Output:
+
+Compile error
+*/
+
+//Question 3
+
+#include <stdio.h>
+#include <string.h>
+ 
+int main()
+{
+    printf("GEEKS size = %d \n\n", sizeof("GEEKS"));
+    printf("GEEKS length = %d \n", strlen("GEEKS"));
+    return 0;
+}
+
+/*
+sizeof() function returns the size of the string including null character while strlen() function returns length of the string excluding null character.
+So, the output will be as shown below :
+Output:
+
+GEEKS size = 6
+GEEKS length = 5
+*/
+
+//Question 4
+
+#include <stdio.h>
+ 
+int extern i;
+ 
+int main()
+{
+    printf("%d", i);
+}
+ 
+int i = 10;
+
+/*
+With the help of extern keyword, the declaration of variable can be done any where in the program. Here, i is a variable which is being declared after the printf statement outside the main. Still, it can be accessed by the printf statement as it is an extern variable. For more details on the keyword extern
+Output:
+
+10
+*/
+
+//Question 5
+
+#include<stdio.h>
+int main()
+{
+   int a = 10;
+   printf("%o %x", a, a);
+   return 0;
+}
+
+*/
+As, %o is used to print the number in octal number format and %x is used to print the number in hexadecimal number format. And if we convert decimal 10 to octal , we get 12 and in hexadecimal it will give a
+
+Output:
+
+12 a
+*/
+
+//Question 6
+
+#include<stdio.h>
+ 
+int main()
+{
+   printf("%s", "Geeks\nFor\nGeeks\nis\nthe\nbest");
+}
+
+/*
+Instead of getting output as Geeks\nFor\nGeeks\nis\nthe\nbest, the output is something different. %s treats \n as ‘new line’ even if it is inside a string, and hence it prints the output as shown below:
+Output:
+
+Geeks
+For
+Geeks
+is
+the
+best
+
+*/
