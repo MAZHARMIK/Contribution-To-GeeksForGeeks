@@ -1,0 +1,91 @@
+//1) execvp()
+
+//EXEC.c
+#include<stdio.h>
+#include<unistd.h>
+ 
+int main()
+{
+    int i;
+     
+    printf("I am EXEC.c called by execvp() ");
+    printf("\n");
+     
+    return 0;
+}
+
+
+//Now,create an executable file of EXEC.c using command gcc EXEC.c -o EXEC
+
+//execDemo.c
+#include<stdio.h>
+#include<stdlib.h>
+#include<unistd.h>
+int main()
+{
+        //A null terminated array of character 
+        //pointers
+        char *args[]={"./EXEC",NULL};
+        execvp(args[0],args);
+     
+        /*All statements are ignored after execvp() call as this whole 
+        process(execDemo.c) is replaced by another process (EXEC.c)
+        */
+        printf("Ending-----");
+     
+    return 0;
+}
+*/
+
+Now, create an executable file of execDemo.c using command gcc execDemo.c -o execDemo
+After running the executable file of execDemo.cby using command ./excDemo, we get the following output:
+
+I AM EXEC.c called by execvp()
+When the file execDemo.c is compiled, as soon as the statement execvp(args[0],args) is executed, this very program is replaced by 
+the program EXEC.c.  “Ending—–” is not printed because because as soon as the execvp() function is called, this program is replaced
+by the program EXEC.c
+
+*/
+
+//2)execv()
+
+//EXEC.c
+#include<stdio.h>
+#include<unistd.h>
+ 
+int main()
+{
+    int i;
+     
+    printf("I am EXEC.c called by execv() ");
+    printf("\n");
+    return 0;
+}
+
+//Now,create an executable file of EXEC.c using command gcc EXEC.c -o EXEC
+
+//execDemo.c
+#include<stdio.h>
+#include<stdlib.h>
+#include<unistd.h>
+int main()
+{
+        //A null terminated array of character 
+        //pointers
+        char *args[]={"./EXEC",NULL};
+        execvp(args[0],args);
+     
+        /*All statements are ignored after execvp() call as this whole 
+        process(execDemo.c) is replaced by another process (EXEC.c)
+        */
+        printf("Ending-----");
+     
+    return 0;
+}
+
+/*
+Now, create an executable file of execDemo.c using command gcc execDemo.c -o execDemo
+After running the executable file of execDemo.c by using command ./excDemo, we get the following output:
+
+I AM EXEC.c called by execv()
+*/
