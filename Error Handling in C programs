@@ -1,0 +1,176 @@
+Although C does not provide direct support to error handling (or exception handling), there are ways through which error handling can be done in C. A programmer has to prevent errors at the first place and test return values from the functions.
+A lot of C function calls return a -1 or NULL in case of an error, so quick test on these return values are easily done with for instance an ‘if statement’. For example, In Socket Programming, the returned value of the functions like socket(), listen() etc. are checked to see if there is an error or not.
+
+Example: Error handling in Socket Programming
+
+if ((server_fd = socket(AF_INET, SOCK_STREAM, 0)) == 0)
+{
+   perror("socket failed");
+   exit(EXIT_FAILURE);
+}
+Different methods of Error handling in C
+
+Global Variable errno: When a function is called in C, a variable named as errno is automatically assigned a code (value) which can be used to identify the type of error that has been encountered. Its a global variable indicating the error occurred during any function call and defined in the header file errno.h.
+Different codes (values) for errno mean different types of errors. Below is a list of few different errno values and its corresponding meaning:
+errno value       Error
+1             /* Operation not permitted */
+2             /* No such file or directory */
+3             /* No such process */
+4             /* Interrupted system call */
+5             /* I/O error */
+6             /* No such device or address */
+7             /* Argument list too long */
+8             /* Exec format error */
+9             /* Bad file number */
+10            /* No child processes */
+11            /* Try again */
+12            /* Out of memory */
+13            /* Permission denied */
+
+// C implementation to see how errno value is
+// set in the case of any error in C
+#include <stdio.h>
+#include <errno.h>
+ 
+int main()
+{
+    // If a file is opened which does not exist,
+    // then it will be an error and corresponding
+    // errno value will be set
+    FILE * fp;
+ 
+    // opening a file which does
+    // not exist.
+    fp = fopen("GeeksForGeeks.txt", "r");
+ 
+    printf(" Value of errno: %d\n ", errno);
+ 
+    return 0;
+}
+Run on IDE
+Output:
+
+Value of errno: 2
+Note: Here the errno is set to 2 which means – No such file or directory. On online IDE it may give errorno 13, which says permission denied.
+
+perror() and strerror(): The errno value got above indicate the types of error encountered.
+If it is required to show the error description, then there are two functions that can be used to display a text message that is associated with errorno. The functions are:
+perror: It displays the string you pass to it, followed by a colon, a space, and then the textual representation of the current errno value.
+Syntax:
+void perror (const char *str)
+str: is a string containing a custom message
+to be printed before the error message itself.
+strerror(): returns a pointer to the textual representation of the current errno value.
+Syntax:
+char *strerror (int errnum)
+errnum: is the error number (errno).
+// C implementation to see how perror() and strerror()
+// functions are used to print the error messages.
+#include <stdio.h>
+#include <errno.h>
+#include <string.h>
+ 
+int main ()
+{
+    FILE *fp;
+ 
+    // If a file is opened which does not exist,
+    // then it will be an error and corresponding
+    // errno value will be set
+    fp = fopen(" GeeksForGeeks.txt ", "r");
+ 
+    // opening a file which does
+    // not exist.
+    printf("Value of errno: %d\n ", errno);
+    printf("The error message is : %s\n", 
+                         strerror(errno));
+    perror("Message from perror");
+ 
+    return 0;
+}
+
+Output:
+On Personal desktop:
+
+Value of errno: 2
+The error message is : No such file or directory
+Message from perror: No such file or directory
+On online IDE:
+
+ Value of errno: 13
+The error message is : Permission denied
+Note: The function perror() displays a string passed to it, followed by a colon and the textual message of the current errno value.
+
+Exit Status: The C standard specifies two constants: EXIT_SUCCESS and EXIT_FAILURE, that may be passed to exit() to indicate successful or unsuccessful termination, respectively. These are macros defined in stdlib.h.
+// C implementation which shows the
+// use of EXIT_SUCCESS and EXIT_FAILURE.
+#include <stdio.h>
+#include <errno.h>
+#include <string.h>
+#include <stdlib.h>
+ 
+int main ()
+{
+    FILE * fp;
+    fp = fopen ("filedoesnotexist.txt", "rb");
+ 
+    if (fp == NULL)
+    {
+        printf("Value of errno: %d\n", errno);
+        printf("Error opening the file: %s\n",
+                             strerror(errno));
+        perror("Error printed by perror");
+ 
+        exit(EXIT_FAILURE);
+        printf("I will not be printed\n");
+    }
+ 
+    else
+    {
+        fclose (fp);
+        exit(EXIT_SUCCESS);
+        printf("I will not be printed\n");
+    }
+    return 0;
+}
+
+Output:
+
+Value of errno: 2
+Error opening the file: No such file or directory
+Error printed by perror: No such file or directory
+Divide by Zero Errors: A common pitfall made by C programmers is not checking if a divisor is zero before a division command. Division by zero leads to undefined behavior, there is no C language construct that can do anything about it. Your best bet is to not divide by zero in the first place, by checking the denominator.
+// C program to check  and rectify
+// divide by zero condition
+#include<stdio.h>
+#include <stdlib.h>
+ 
+void function(int);
+ 
+int main()
+{
+    int x = 0;
+    function(x);
+    return 0;
+}
+ 
+void function(int x)
+{
+    float fx;
+ 
+    if (x==0)
+    {
+        printf("Division by Zero is not allowed");
+        fprintf(stderr, "Division by zero! Exiting...\n");
+        exit(EXIT_FAILURE);
+    }
+    else
+    {
+        fx = 10 / x;
+        printf("f(x) is: %.5f", fx);
+    }
+}
+
+Output:
+
+Division by Zero is not allowed
