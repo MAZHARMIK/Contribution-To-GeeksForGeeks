@@ -1,0 +1,19 @@
+// C program to demonstrate strdup() ans strndup()
+
+#include<stdio.h>
+#include<string.h>
+
+int main()
+{
+	char source[] = "GeeksForGeeks";
+
+	char* target1 = strdup(source); 
+  
+  char* target2 = strndup(source, 5); 
+	
+  printf("%s\n", target1);
+	
+  printf("%s\n", target2);
+	
+  return 0;
+}
