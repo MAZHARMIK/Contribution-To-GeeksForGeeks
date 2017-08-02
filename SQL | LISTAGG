@@ -1,0 +1,65 @@
+LISTAGG function in DBMS is used to aggregate strings from data in columns in a database table.
+
+It makes it very easy to concatenate strings. It is similar to concatenation but uses grouping.
+The speciality about this function is that, it also allows to order the elements in the concatenated list.
+Syntax:
+
+LISTAGG (measure_expr [, 'delimiter']) WITHIN GROUP 
+(order_by_clause) [OVER query_partition_clause]
+measure_expr : The column or expression to concatenate the values.
+delimiter : Character in between each measure_expr, which is by default a comma (,) .
+order_by_clause : Order of the concatenated values.
+Let us have a table named Gfg having two columns showing the subject names and subject number that each subject belongs to, as shown below :
+
+SQL> select * from GfG;
+
+SUBNO      SUBNAME
+---------- ------------------------------
+D20        Algorithm
+D30        DataStructure
+D30        C
+D20        C++
+D30        Python
+D30        DBMS
+D10        LinkedList
+D20        Matrix
+D10        String
+D30        Graph
+D20        Tree
+
+11 rows selected.
+Query 1: Write an SQL query using LISTAGG function to output the subject names in a single field with the values comma delimited.
+
+SQL> SELECT LISTAGG(SubName, ' , ') WITHIN GROUP (ORDER BY SubName) AS SUBJECTS
+  2  FROM   GfG ;
+Output:
+
+SUBJECTS
+-----------------------------------------------------------------------------------
+Algorithm , C , C++ , DBMS , DataStructure , Graph , LinkedList , Matrix , Python ,
+String , Tree
+Query 2: Write an SQL query to group each subject and show each subject in its respective department separated by comma with the help of LISTAGG function.
+
+SQL> SELECT SubNo, LISTAGG(SubName, ' , ') WITHIN GROUP (ORDER BY SubName) AS SUBJECTS
+  2  FROM   GfG
+  3  GROUP BY SubNo;
+Output:
+
+SUBNO      SUBJECTS
+------     --------------------------------------------------------------------------------
+D10	    LinkedList , String
+D20         Algorithm , C++ , Matrix , Tree
+D30         C , DBMS , DataStructure , Graph , Python
+Query 3: Write an SQL query to show the subjects belonging to each department ordered by the subject number (SUBNO) with the help of LISTAGG function.
+
+SQL> SELECT SubNo, LISTAGG(SubName, ',') WITHIN GROUP (ORDER BY SubName) AS SUBJECTS
+  2  FROM   GfG
+  3  GROUP BY SubNo
+  4  ORDER BY SubNo;
+Output:
+
+SUBNO        SUBJECTS
+-----        --------------------------------
+D10          LinkedList, String
+D20          Algorithm, C++, Matrix, Tree
+D30          C, DBMS, DataStructure, Graph, Python
