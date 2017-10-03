@@ -1,0 +1,91 @@
+/* 1) Keeping the Copy Constructor and Copy assignment operator as private in the class.
+Below is the C++ implementation to illustrate how this can be done.*/
+
+#include <iostream>
+using namespace std;
+ 
+class Base {
+    int x;
+public:
+    Base()    {  }
+    Base(int y): x(y)     {  }
+private:
+ 
+    // Copy constructor
+    Base(const Base& obj) : x(obj.x) {   }
+ 
+    // copy assignment operator
+    Base& operator=(const Base& tmp_obj)
+    {
+        x = tmp_obj.x;
+        return *this;
+    }
+};
+ 
+int main()
+{
+    Base b1(10);
+    Base b2(b1); // calls copy constructor
+    b2 = b1; // calls copy assignment operator
+    return 0;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+/* 2) Inherit a Dummy class with a private copy constructor and a private copy assignment operator.
+Below is the C++ implementation to illustrate how this can be done.*/
+#include <iostream>
+using namespace std;
+ 
+class Dummy {
+public:
+    Dummy() {  }
+private:
+    Dummy(const Dummy& temp_obj)  {   }
+    Dummy& operator=(const Dummy& temp_obj)   {   }
+};
+ 
+class Base : public Dummy {
+    int x;
+public: 
+    Base()  {   }
+    Base(int y) : x(y)  {  }
+};
+ 
+int main()
+{
+    Base b1(10);
+    Base b2(b1); // Calls copy constructor
+    b2 = b1; // Calls copy assignment operator
+    return 0;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/* 3) Using Deleted copy constructor and copy assignment operator: Above two ways are quite complex, C++11 has come up with a simpler solution i.e. just delete the copy constructor and assignment operator.
+Below is the C++ implementation to illustrate :*/
+
+// CPP program to demonstrate use Delete copy
+// constructor and delete assignment operator
+#include <iostream>
+using namespace std;
+ 
+class Base {
+    int x;
+public:
+    Base()   {     }
+    Base(int y) : x(y) {    }
+    Base(const Base& temp_obj) = delete;
+    Base& operator=(const Base& temp_obj) = delete;
+};
+ 
+int main()
+{
+    Base b1(10);
+    Base b2(b1); // Calls copy constructor
+    b2 = b1; // Calls copy assignment operator
+    return 0;
+}
+
