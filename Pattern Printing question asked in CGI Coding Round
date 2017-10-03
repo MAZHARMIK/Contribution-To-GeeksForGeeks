@@ -1,0 +1,106 @@
+/*
+Approach: The approach is to see the problem not as a single task but three tasks which on combining completes the main task. The three tasks are printing left-half of pattern, printing dashes(-) and printing right-half of pattern. Combining all three tasks we would be able to print the pattern.
+
+left-half of pattern
+1*2*3*
+--4*5*
+----6*
+
+A function printdashes() to print the "-".
+
+right-half of pattern
+10*11*12
+*8*9
+7
+*/
+
+// C program to print the given pattern
+#include <stdio.h>
+ 
+// utility function to print "-" in every
+// row. This will take care of printing 
+// "-" in the start of every row
+void printdashes(int k)
+{
+    int i;
+    for (i = 1; i <= k; i++)
+        printf("-");
+}
+ 
+// function to print the pattern
+void pattern(int n){
+     
+    // variables for vertical left half
+    /*
+    1*2*3*
+    --4*5*
+    ----6*
+    */
+    int row, column, dashes = 0;
+    int i, j, dash_counter = 0;
+    int value = 1;
+ 
+    // variables for vertical right half
+    /*
+    10*11*12
+    *8*9
+    7
+    */
+    int k, l, decrementor = 0; 
+    int column_decrementor = 0;
+    int support = n - 1;
+    int temp = ((n * n) + 1);
+    int temp1 = (n * 2) - 1;
+    int z = temp;
+ 
+    int tracker;
+ 
+     
+    for (i = 1; i <= n; i++) {
+        printdashes(dash_counter);
+         
+        // This part will take care of the vertical
+    // left half of the pattern
+        for (j = 1; j <= (2 * n) - dash_counter; j++) {
+             
+            // Printing the "*" in even positions
+            if (j % 2 == 0)
+                printf("*");
+            else {
+                printf("%d", value);
+                value++;
+            }
+        }
+ 
+        // This part will take care of the vertical
+        // right half of the pattern
+        for (k = 1; k <= (temp1 - decrementor); k++) {
+             
+            // Printing the "*" in even positions
+            if (k % 2 == 0)
+                printf("*");
+            else {
+                if (k == 1)
+                    tracker = temp;
+                printf("%d", temp);
+                temp++;
+            }
+        }
+        decrementor += 2;
+        temp = tracker - support;
+        support--;
+ 
+        // In every row, the number of dash counts
+        // is increased by 2
+        dash_counter += 2;
+        printf("\n");
+    }
+}
+ 
+// driver program
+int main()
+{   
+    int n = 3;
+    pattern(n);
+    return 0;
+}
