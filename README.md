@@ -1,4 +1,4 @@
 # My-Contribution-To-GeeksForGeeks
 This include few of my self developed questions and articles that I have contributed to GeeksForGeeks
 
-![20171120141028](https://user-images.githubusercontent.com/17107752/35180644-6425788c-fdda-11e7-8521-8e63fb669fbc.png)
+<a href="https://github.com/MAZHARMIK"><img src="https://www.geeksforgeeks.org/wp-content/uploads/GeeksforGeeksLogoHeader.png" width="600" height="250"></a>
